@@ -35,11 +35,15 @@ def game_status(board_size, board):
     
     B_wins = 0
     for r in range(board_size):
-        B_wins += bfs(r, 0, 'B', board_size, board)
+        wins = bfs(r, 0, 'B', board_size, board)
+        print("BLUE WINS", wins)
+        
     
     R_wins = 0
     for c in range(board_size):
-        R_wins += bfs(0, c, 'R', board_size, board)
+        wins = bfs(0, c, 'R', board_size, board)
+        print("RED WINS", wins)
+        
 
     
     print("BLUE", B_count, B_wins)
@@ -60,19 +64,18 @@ def game_status(board_size, board):
         return "nobody"
     
     
-    return ""
-
 
 # Need to return number of times we win
 def bfs(r, c, letter, board_size, board):
     # 6 directions because of Hex
     
     if board[r][c] != letter:
-        return False
+        return 0
     
     directions = [(0,-1), (0,1), (1,-1), (1,0), (-1,-1), (-1,0)]
     
     seen = set()
+    seen.add((r,c))
     q = [(r,c)]
     wincount = 0
     
@@ -83,15 +86,13 @@ def bfs(r, c, letter, board_size, board):
         elif letter == 'B' and curr[1] == board_size-1:
             wincount += 1
         else:
-            seen.add(curr)
-            
             for d in directions:
                 nr = curr[0] + d[0]
                 nc = curr[1] + d[1]
                 if 0 <= nr < board_size and 0 <= nc < board_size \
                     and (nr, nc) not in seen and board[nr][nc] == letter:
+                        seen.add((nr,nc))
                         q.append((nr, nc)) 
-    
     
     return wincount
 
