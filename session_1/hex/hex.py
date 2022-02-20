@@ -72,7 +72,7 @@ def bfs(r, c, letter, board_size, board):
     if board[r][c] != letter:
         return 0
     
-    directions = [(0,-1), (0,1), (1,-1), (1,0), (-1,-1), (-1,0)]
+    directions = [(0,-1), (0,1), (1,-1), (1,0), (-1,0), (-1,1)]
     
     seen = set()
     seen.add((r,c))
